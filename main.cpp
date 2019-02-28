@@ -10,7 +10,7 @@
 #include <gl/glut.h>
 #include <iostream>
 
-float pX = 49, pY = 19; //initial position X,Y
+float pX = 48, pY = 19; //initial position X,Y
 float step = 0.2; 	//step value 
 float pR=1, pG=0, pB=0; //initial player color
 float lR=0, lG=0, lB=0; //initial Maze color
@@ -128,7 +128,7 @@ void Draw(void){
 	glFlush();
 }
 
-bool Colision(int key){
+bool ColisionByColor(int key){
 		
 	float pixel[4];
 	
@@ -163,29 +163,130 @@ bool Colision(int key){
 		
 }
 
-//Move the player when directional keys are pressed
-void KeyboardManagement(int key, int x, int y){
+bool Collision(float x, float y, int ret){
+	
+	switch(ret){
+		case 1:
+			if((48>x||x>49)||(19>y||y>37)){	
+				printf("1");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		case 2:
+			if((x>73)||(36>y||y>37)){
+				printf("2");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		case 3:
+			if((72>x||x>73)||(y>41)){	//3
+				printf("3");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		case 4:
+			if((51>x)||(40>y||y>41)){	//4
+				printf("4");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		case 5:
+			if((51>x||x>52)||(y>45)){	//5
+				printf("5");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		case 6:
+			if((x>58)||(44>y)){	//6
+				printf("6");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		case 7:
+			if((57>x||x>58)||(45>y||y>54)){	//7
+				printf("7");
+				return true;
+			}else{
+				return false;
+			}
+			break;
+		default:
+			return false;
+	}
+}
 
-	if(Colision(key)){
-		switch(key){
-			case GLUT_KEY_RIGHT:
-				pX += step;
-				break;
-			case GLUT_KEY_LEFT:
-				pX -= step;
-				break;
-			case GLUT_KEY_DOWN:
-				pY -= step;
-				break;
-			case GLUT_KEY_UP:
-				pY += step;
-				break;
-			default:
-				break;	
-		}	
+// verify wich area is the maze  the player in (Veirfy rectangle)
+int VerifyRect(float x, float y){
+	
+	if((48<=x&&x<=49)&&(19<=y&&y<=37)){		//1
+		printf("ret 1");
+		return 1;
+	}else if((49<=x&&x<=73)&&(36<=y&&y<=37)){	//2
+		printf("ret 2");
+		return 2;
+	}else if((72<=x&&x<=73)&&(37<=y&&y<=41)){	//3
+		printf("ret 3");
+		return 3;
+	}else if((51<=x&&x<=72)&&(40<=y&&y<=41)){	//4
+		printf("ret 4");
+		return 4;
+	}else if((51<=x&&x<=52)&&(41<=y&&y<=45)){	//5
+		printf("ret 5");
+		return 5;
+	}else if((52<=x&&x<=58)&&(44<=y&&y<=45)){	//6
+		printf("ret 6");
+		return 6;
+	}else if((57<=x&&x<=58)&&(45<=y&&y<=54)){	//7
+		printf("ret 7");
+		return 7;
+	}
+}
+
+//Move the player when directional keys are pressed
+void KeyboardManagement(int key, int mouseX, int mouseY){
+	
+	float x=pX,y=pY;
+	int ret = VerifyRect(x,y);	
+	
+	switch(key){
+		case GLUT_KEY_RIGHT:
+			x += step;
+			break;
+		case GLUT_KEY_LEFT:
+			x -= step;
+			printf("%f",x);
+			break;
+		case GLUT_KEY_DOWN:
+			y -= step;
+			break;
+		case GLUT_KEY_UP:
+			y += step;
+			break;
+		default:
+			break;	
 	}
 	
-	glutPostRedisplay();	
+	if(Collision(x,y,ret)){
+		pX = 49;
+		pY = 19;
+		glutPostRedisplay();
+	}else{
+		pX = x;
+		pY = y;
+		glutPostRedisplay();
+	}	
 }
 
 void MazeColor(int choice){
