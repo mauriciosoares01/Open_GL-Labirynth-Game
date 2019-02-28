@@ -1,6 +1,6 @@
 /**************************
  *
- * Labirynth Game
+ * Maze Game
  * Author: Maurício Silva Soares
  *
  **************************
@@ -13,7 +13,7 @@
 float pX = 49, pY = 19; //initial position X,Y
 float step = 0.2; 	//step value 
 float pR=1, pG=0, pB=0; //initial player color
-float lR=0, lG=0, lB=0; //initial labirynth color
+float lR=0, lG=0, lB=0; //initial Maze color
 float wR=1, wG=1, wB=1; //initial window color
 
 //Configure the window and the viewport
@@ -188,7 +188,7 @@ void KeyboardManagement(int key, int x, int y){
 	glutPostRedisplay();	
 }
 
-void LabColor(int choice){
+void MazeColor(int choice){
 	switch(choice){
 		case 0:
 			lR=1; lG=0; lB=0;
@@ -229,7 +229,7 @@ void NewMenu(){
 	
 	int menu, submenu1, submenu2;
 	
-	submenu1=glutCreateMenu(LabColor);
+	submenu1=glutCreateMenu(MazeColor);
 	glutAddMenuEntry("Red",0);
     glutAddMenuEntry("Green",1);
     glutAddMenuEntry("Blue",2);
@@ -241,7 +241,7 @@ void NewMenu(){
     glutAddMenuEntry("Blue",2);
 	
 	menu=glutCreateMenu(MainMenu);
-	glutAddSubMenu("Labirynth color",submenu1);
+	glutAddSubMenu("Maze color",submenu1);
 	glutAddSubMenu("Player color",submenu2);
 	
 	glutAttachMenu(GLUT_LEFT_BUTTON);
