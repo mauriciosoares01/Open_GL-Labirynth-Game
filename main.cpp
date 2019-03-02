@@ -161,13 +161,13 @@ bool ColisionByColor(int key){
 			break;	
 	}
 	
-	printf("(%f,%f)\t",pX,pY);
-	printf("lR: %f", lR);
-	printf("pixel[0]: %f\t",pixel[0]);	
-	printf("lG: %.2f", lG);
-	printf("pixel[1]: %f\t",pixel[1]);
-	printf("lB: %.2f", lB);
-	printf("pixel[2]: %f\n",pixel[2]);
+//	printf("(%f,%f)\t",pX,pY);
+//	printf("lR: %f", lR);
+//	printf("pixel[0]: %f\t",pixel[0]);	
+//	printf("lG: %.2f", lG);
+//	printf("pixel[1]: %f\t",pixel[1]);
+//	printf("lB: %.2f", lB);
+//	printf("pixel[2]: %f\n",pixel[2]);
 	
 	if((pixel[0]==lR) && (pixel[1]==lG) && (pixel[2]==lB)){
 		return false;
@@ -186,7 +186,7 @@ bool Collision(float x, float y, int rect,int key){
 				if(key==GLUT_KEY_RIGHT && (y>36 && y<37)){	// exception for area change
 					return false;
 				}else{
-				printf("1");
+//				printf("1");
 				return true;
 				}
 			}else{	// if does not collide
@@ -198,7 +198,7 @@ bool Collision(float x, float y, int rect,int key){
 				if(key==GLUT_KEY_UP && (x>72 && y<73)){	// exception for area change
 					return false;
 				}else{
-				printf("2");
+//				printf("2");
 				return true;
 				}
 			}else{	// if does not collide
@@ -210,7 +210,7 @@ bool Collision(float x, float y, int rect,int key){
 				if(key==GLUT_KEY_LEFT && (y>40 && y<41)){	// exception for area change
 					return false;
 				}else{
-				printf("3");
+//				printf("3");
 				return true;
 				}
 			}else{	// if does not collide
@@ -222,7 +222,7 @@ bool Collision(float x, float y, int rect,int key){
 				if(key==GLUT_KEY_UP && (x>51 && y<52)){	// exception for area change
 					return false;
 				}else{
-				printf("4");
+//				printf("4");
 				return true;
 				}
 			}else{	// if does not collide
@@ -234,7 +234,7 @@ bool Collision(float x, float y, int rect,int key){
 				if(key==GLUT_KEY_RIGHT && (y>44 && y<45)){	// exception for area change
 					return false;
 				}else{
-				printf("5");
+//				printf("5");
 				return true;
 				}
 			}else{
@@ -246,7 +246,7 @@ bool Collision(float x, float y, int rect,int key){
 				if(key==GLUT_KEY_UP && (x>57 && y<58)){	// exception for area change
 					return false;
 				}else{
-				printf("6");
+//				printf("6");
 				return true;
 				}
 			}else{	// if does not collide
@@ -255,7 +255,7 @@ bool Collision(float x, float y, int rect,int key){
 			break;
 		case 7:
 			if((57>x||x>58)||(45>y)){	// area 7 collision
-				printf("7");
+//				printf("7");
 				return true;
 			}else{	// if does not collide
 				return false;
@@ -270,25 +270,25 @@ bool Collision(float x, float y, int rect,int key){
 int VerifyRect(float x, float y){
 	
 	if((48<=x&&x<=49)&&(19<=y&&y<=37)){		//1
-		printf("ret 1");
+//		printf("ret 1");
 		return 1;
 	}else if((49<=x&&x<=73)&&(36<=y&&y<=37)){	//2
-		printf("ret 2");
+//		printf("ret 2");
 		return 2;
 	}else if((72<=x&&x<=73)&&(37<=y&&y<=41)){	//3
-		printf("ret 3");
+//		printf("ret 3");
 		return 3;
 	}else if((51<=x&&x<=72)&&(40<=y&&y<=41)){	//4
-		printf("ret 4");
+//		printf("ret 4");
 		return 4;
 	}else if((51<=x&&x<=52)&&(41<=y&&y<=45)){	//5
-		printf("ret 5");
+//		printf("ret 5");
 		return 5;
 	}else if((52<=x&&x<=58)&&(44<=y&&y<=45)){	//6
-		printf("ret 6");
+//		printf("ret 6");
 		return 6;
 	}else if((57<=x&&x<=58)&&(45<=y&&y<=54)){	//7
-		printf("ret 7");
+//		printf("ret 7");
 		return 7;
 	}else if((57<=x&&x<=60)&&(54<=y&&y<=57)){
 		return 0;
@@ -309,7 +309,6 @@ void KeyboardManagement(int key, int mouseX, int mouseY){
 				break;
 			case GLUT_KEY_LEFT:
 				x -= step;
-				printf("%f",x);
 				break;
 			case GLUT_KEY_DOWN:
 				y -= step;
