@@ -1,7 +1,8 @@
 /**************************
  *
- * Maze Game
- * Author: Maurício Silva Soares
+ * MAZE GAME
+ * Checkout on github: https://github.com/mauriciosoares01/Open_GL-Maze-Game
+ * Author: MaurÃ­cio Silva Soares
  * Using OpenGL
  * Goal:
  *	Move trough the maze until the end, without touch the walls
