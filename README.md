@@ -6,11 +6,10 @@
 <body>
   <figure>
     <img src="maze.jpg" alt="The final maze of the game" width=50% height=50%">                                                             <figcaption>&nbsp&nbsp;Fig 1. Final maze</figcaption> 
-  </figure><br>                                                                              
+  </figure><br><br>                                                                              
   <figure>
     <img src="mockup.jpg" alt="The base mockup for the game" width=50% height=50%">
     <figcaption>&emsp;Fig 2. Game mockup</figcaption>                                                                                  
-  </figure>
-  <br>
+  </figure><br><br>
   <p>The reference to square position is the left down cornner. The blue area in the maze represents the limits for movimentation.</p>
 </body>                                                               
