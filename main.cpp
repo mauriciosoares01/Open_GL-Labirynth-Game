@@ -2,6 +2,12 @@
  *
  * Maze Game
  * Author: Maurício Silva Soares
+ * Using OpenGL
+ * Goal:
+ *	Move trough the maze until the end, without touch the walls
+ * Controls:
+ *	Directional keys for movement
+ *	Left mouse buttom for color change
  *
  **************************
 */
@@ -10,11 +16,13 @@
 #include <gl/glut.h>
 #include <iostream>
 
-float pX = 48, pY = 19; //initial position X,Y
+float pX = 48.5, pY = 19; //initial position X,Y
 float step = 0.2; 	//step value 
 float pR=1, pG=0, pB=0; //initial player color
 float lR=0, lG=0, lB=0; //initial Maze color
 float wR=1, wG=1, wB=1; //initial window color
+int state=0; // 0 = on game, 1 = victory, 2 = game over
+
 
 //Configure the window and the viewport
 void Init(void){
@@ -128,6 +136,11 @@ void Draw(void){
 	glFlush();
 }
 
+void Victory(void){
+	state=1;
+}
+
+// a test to identifie collision by the color of the maze
 bool ColisionByColor(int key){
 		
 	float pixel[4];
@@ -163,62 +176,87 @@ bool ColisionByColor(int key){
 		
 }
 
-bool Collision(float x, float y, int ret){
-	
-	switch(ret){
+// Collision based on a mockup available in github page
+bool Collision(float x, float y, int rect,int key){
+	// the collision is divided by 7 sectors (rect)
+	switch(rect){
 		case 1:
-			if((48>x||x>49)||(19>y||y>37)){	
+			if((48>x||x>49)||(19>y||y>37)){	// area 1 collision
+				if(key==GLUT_KEY_RIGHT && (y>36 && y<37)){	// exception for area change
+					return false;
+				}else{
 				printf("1");
 				return true;
-			}else{
+				}
+			}else{	// if does not collide
 				return false;
 			}
 			break;
 		case 2:
-			if((x>73)||(36>y||y>37)){
+			if((x>73)||(36>y||y>37)){ // area 2 collision
+				if(key==GLUT_KEY_UP && (x>72 && y<73)){	// exception for area change
+					return false;
+				}else{
 				printf("2");
 				return true;
-			}else{
+				}
+			}else{	// if does not collide
 				return false;
 			}
 			break;
 		case 3:
-			if((72>x||x>73)||(y>41)){	//3
+			if((72>x||x>73)||(y>41)){	// area 3 collision
+				if(key==GLUT_KEY_LEFT && (y>40 && y<41)){	// exception for area change
+					return false;
+				}else{
 				printf("3");
 				return true;
-			}else{
+				}
+			}else{	// if does not collide
 				return false;
 			}
 			break;
 		case 4:
-			if((51>x)||(40>y||y>41)){	//4
+			if((51>x)||(40>y||y>41)){	// area 4 collision
+				if(key==GLUT_KEY_UP && (x>51 && y<52)){	// exception for area change
+					return false;
+				}else{
 				printf("4");
 				return true;
-			}else{
+				}
+			}else{	// if does not collide
 				return false;
 			}
 			break;
 		case 5:
-			if((51>x||x>52)||(y>45)){	//5
+			if((51>x||x>52)||(y>45)){	// area 5 collision
+				if(key==GLUT_KEY_RIGHT && (y>44 && y<45)){	// exception for area change
+					return false;
+				}else{
 				printf("5");
 				return true;
+				}
 			}else{
 				return false;
 			}
 			break;
 		case 6:
-			if((x>58)||(44>y)){	//6
+			if((x>58)||(44>y)){	// area 6 collision
+				if(key==GLUT_KEY_UP && (x>57 && y<58)){	// exception for area change
+					return false;
+				}else{
 				printf("6");
 				return true;
-			}else{
+				}
+			}else{	// if does not collide
 				return false;
 			}
 			break;
 		case 7:
-			if((57>x||x>58)||(45>y||y>54)){	//7
+			if((57>x||x>58)||(45>y)){	// area 7 collision
 				printf("7");
 				return true;
-			}else{
+			}else{	// if does not collide
 				return false;
 			}
 			break;
@@ -227,7 +265,7 @@ bool Collision(float x, float y, int ret){
 	}
 }
 
-// verify wich area is the maze  the player in (Veirfy rectangle)
+// verify wich area is the player in the maze (Veirify rectangle)
 int VerifyRect(float x, float y){
 	
 	if((48<=x&&x<=49)&&(19<=y&&y<=37)){		//1
@@ -251,6 +289,8 @@ int VerifyRect(float x, float y){
 	}else if((57<=x&&x<=58)&&(45<=y&&y<=54)){	//7
 		printf("ret 7");
 		return 7;
+	}else if((57<=x&&x<=60)&&(54<=y&&y<=57)){
+		return 0;
 	}
 }
 
@@ -258,37 +298,43 @@ int VerifyRect(float x, float y){
 void KeyboardManagement(int key, int mouseX, int mouseY){
 	
 	float x=pX,y=pY;
-	int ret = VerifyRect(x,y);	
+	int rect = VerifyRect(x,y);
 	
-	switch(key){
-		case GLUT_KEY_RIGHT:
-			x += step;
-			break;
-		case GLUT_KEY_LEFT:
-			x -= step;
-			printf("%f",x);
-			break;
-		case GLUT_KEY_DOWN:
-			y -= step;
-			break;
-		case GLUT_KEY_UP:
-			y += step;
-			break;
-		default:
-			break;	
+	if(state!=1){
+		// add or subtract the step for wich directional key pressed
+		switch(key){
+			case GLUT_KEY_RIGHT:
+				x += step;
+				break;
+			case GLUT_KEY_LEFT:
+				x -= step;
+				printf("%f",x);
+				break;
+			case GLUT_KEY_DOWN:
+				y -= step;
+				break;
+			case GLUT_KEY_UP:
+				y += step;
+				break;
+			default:
+				break;	
+		}
 	}
 	
-	if(Collision(x,y,ret)){
-		pX = 49;
+	// verify the collision, if TRUE, reset the position
+	if(Collision(x,y,rect,key)){
+		state = 0;
+		pX = 48.5;
 		pY = 19;
 		glutPostRedisplay();
-	}else{
+	}else{	// else, the moviment is allowed
 		pX = x;
 		pY = y;
 		glutPostRedisplay();
 	}	
 }
 
+// change the maze color
 void MazeColor(int choice){
 	switch(choice){
 		case 0:
@@ -308,6 +354,7 @@ void MazeColor(int choice){
 	glutPostRedisplay();
 }
 
+//change the player color
 void PlayerColor(int choice){
 	switch(choice){
 		case 0:
@@ -324,8 +371,10 @@ void PlayerColor(int choice){
 	glutPostRedisplay();
 }
 
+// just to initialize the menu
 void MainMenu(int choice){}
 
+// create the menu and submenus for color change
 void NewMenu(){
 	
 	int menu, submenu1, submenu2;
@@ -348,6 +397,7 @@ void NewMenu(){
 	glutAttachMenu(GLUT_LEFT_BUTTON);
 }
 
+// calls a menu when left button is clicked
 void MouseManagement(int button, int state, int x, int y){
 	if(button == GLUT_LEFT_BUTTON){
 		if(state == GLUT_DOWN)
